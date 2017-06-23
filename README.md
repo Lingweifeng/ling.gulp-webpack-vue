@@ -1,4 +1,5 @@
-一.如何使用<br>
+基于vue的gulp+webpack开发框架
+--------------------------------------------
 1.安装nodejs(检测版本号:node -v; npm -v);<br>
 2.全局安装gulp<br>
 ```
@@ -8,7 +9,7 @@ npm install --global gulp
 ```
 gulp gulp dev
 ```
-3.生产模式<br>
+4.生产模式<br>
 ```
 gulp build
 ```
