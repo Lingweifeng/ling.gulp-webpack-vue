@@ -3,9 +3,20 @@ var projectName = 'demo',
     webpack = require( 'webpack' ),
     glob = require('glob'),
     path = require('path'),
+    minimist = require( 'minimist' ),
     named = require( 'vinyl-named' ),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     HtmlWebpackPlugin = require('html-webpack-plugin');
+
+// 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env app
+var knownOptions = {
+    string: 'env',
+    default: { env: process.env.NODE_ENV || 'dev' }
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
+
+console.log( options.env );
 
 // 根据项目具体需求，输出正确的 js 和 html 路径
 function getEntry(globPath) {
@@ -63,7 +74,12 @@ module.exports = {
             }, {
                 test: /\.(png|jpg|gif|jpeg)$/, //处理css文件中的背景图片
                 //当图片大小小于这个限制的时候，会自动启用base64编码图片。减少http请求,提高性能
-                loader: 'url-loader?limit=1&name='+ '/dist/[name].[hash:4].[ext]'
+                use: [{
+                    loader: 'url-loader?name='+ '/public/[name].[hash:4].[ext]',
+                    options: {
+                      limit: 8192
+                    }  
+                }]
             }, {
                 test: /\.js$/,
                 loader: 'babel-loader',

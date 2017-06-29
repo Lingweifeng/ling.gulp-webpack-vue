@@ -13,9 +13,8 @@ var projectName = 'demo',
     browserSync = require( 'browser-sync' ).create(),
     reload = browserSync.reload,
     gulpWebpack = require( 'gulp-webpack' ),
+    minimist = require( 'minimist' ),
     webpack = require( 'webpack' ),
-    wpConfigDev = require('./webpack.config.dev.js'),
-    wpConfigApp = require('./webpack.config.app.js'),
     UglifyJSPlugin = require('uglifyjs-webpack-plugin'),
     babel = require( 'gulp-babel' ),
     named = require( 'vinyl-named' ),
@@ -88,40 +87,30 @@ gulp.task('clean:app', function () {
     .pipe(clean());
 });
 
-// 开发环境（开发模式）
-gulp.task('dev', function() {
-    webpack( wpConfigDev, function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack", err);
-        gutil.log("[webpack]", stats.toString({
-            // output options
-        }));
-    });
+// 从命令行传递参数
+var knownOptions = {
+    string: 'env',
+    default: { env: process.env.NODE_ENV || 'dev' }
+};
 
+var options = minimist(process.argv.slice(2), knownOptions);
+
+// 默认开发模式：gulp；生产模式要传入参数：gulp --env app
+gulp.task('default', function() {
+    webpack( require('./webpack.config.js'), function(err, stats) {
+        /*if(err) throw new gutil.PluginError("webpack", err);
+        gutil.log("[webpack]", stats.toString({
+            
+        }));*/
+    });
     browserSync.init({
         server: {
             baseDir: "./",
         },
         startPath: "application/views/index/index.html"
     });
-    gulp.watch( "/assets/sass/*.scss", ['cssmin'] ); // 监听SASS
-    gulp.watch( ["application/views/**/*.html", "public/css/**/*.css", "public/js/**/*.js"], reload ); // 监听html/css/js
-});
-
-// 生产环境（打包）
-gulp.task('build', function() {
-    webpack( wpConfigApp, function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack", err);
-        gutil.log("[webpack]", stats.toString({
-            // output options
-        }));
-    });
-
-    browserSync.init({
-        server: {
-            baseDir: "./",
-        },
-        startPath: "application/views/index/index.html"
-    });
-    gulp.watch( "/assets/sass/*.scss", ['cssmin'] ); // 监听SASS
-    gulp.watch( ["application/views/**/*.html", "public/css/**/*.css", "public/js/**/*.js"], reload ); // 监听html/css/js
+    if( options.env != 'app' ){
+        gulp.watch( "/assets/sass/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( ["application/views/**/*.html", "public/css/**/*.css", "public/js/**/*.js"], reload ); // 监听html/css/js
+    };
 });

@@ -12,10 +12,12 @@
 <script>
 import CompA from '../components/a/a.vue'
 import CompB from '../components/b/b.vue'
+import logo from './static/logo.png'
 export default {
     data () {
         return {
-            msg: '我是模块index!'
+            msg: '我是模块index!',
+            imgUrl: logo
         }
     }
 }

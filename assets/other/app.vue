@@ -10,8 +10,8 @@
 
 <script>
 
-import CompA from '../components/A/A.vue'
-import CompB from '../components/B/B.vue'
+import CompA from '../components/a/a.vue'
+import CompB from '../components/b/b.vue'
 export default {
     data () {
         return {

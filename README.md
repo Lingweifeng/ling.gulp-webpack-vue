@@ -11,5 +11,5 @@ gulp gulp dev
 ```
 4.生产模式<br>
 ```
-gulp build
+gulp app
 ```
