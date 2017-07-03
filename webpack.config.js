@@ -8,16 +8,6 @@ var projectName = 'demo',
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env app
-var knownOptions = {
-    string: 'env',
-    default: { env: process.env.NODE_ENV || 'dev' }
-};
-
-var options = minimist(process.argv.slice(2), knownOptions);
-
-console.log( options.env );
-
 // 根据项目具体需求，输出正确的 js 和 html 路径
 function getEntry(globPath) {
     var entries = {}, basename, tmp, pathname;
@@ -93,14 +83,6 @@ module.exports = {
         ]
     },
     plugins: [
-        //压缩打包的文件
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            beautify: true,
-            sourceMap: true
-        }),
         new ExtractTextPlugin({
             filename: 'public/css/[name].css'
         }),
@@ -112,32 +94,66 @@ module.exports = {
     ]
 }
 
+// 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env production
+var knownOptions = {
+    string: 'env',
+    default: { env: process.env.NODE_ENV || 'dev' }
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
+
+console.log( options.env );
+
+// 生产环境配置
+if( options.env == 'production' ){
+    module.exports.plugins.push( 
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        //压缩打包的文件
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
+    );
+}
+
 var pages = getEntry( './assets/**/*.html');
 for (var pathname in pages) {
-    // 配置生成的 html 文件，定义路径等
-    var conf = {
-        filename: './application/views/' + pathname + '.html', // html 文件输出路径
-        template: pages[pathname], // 模板路径
-        inject: true,              // js 插入位置
-        hash: true,
-        minify: {
-            removeComments: true,  //清除HTML注释
-            //collapseWhitespace: true,  //压缩HTML
-            collapseBooleanAttributes: true,  //省略布尔属性的值 <input checked="true"/> ==> <input />
-            //removeAttributeQuotes: true,  //尽可能地删除html属性的引号
-            removeRedundantAttributes: true,  //当属性值是默认值时删除该属性
-            useShortDoctype: true,  //doctype使用简短形式(h5)
-            //removeOptionalTags: true,  //尽量移除不需要的闭合标签
-            removeEmptyAttributes: true,  //删除所有空格作属性值 <input id="" /> ==> <input />
-            removeScriptTypeAttributes: true,  //删除<script>的type="text/javascript"
-            removeStyleLinkTypeAttributes: true,  //删除<style>和<link>的type="text/css"
-            minifyJS: true,  //压缩页面JS
-            minifyCSS: true  //压缩页面CSS
-        }
-    };
+    // 配置生成的 html 文件，定义路径等，区分开发环境及生产环境
+    if( options.env == 'production' ){
+        var conf = {
+            filename: './application/views/' + pathname + '.html', // html 文件输出路径
+            template: pages[pathname], // 模板路径
+            inject: true,              // js 插入位置
+            hash: true,
+            minify: {
+                removeComments: true,  //清除HTML注释
+                //collapseWhitespace: true,  //压缩HTML
+                collapseBooleanAttributes: true,  //省略布尔属性的值 <input checked="true"/> ==> <input />
+                //removeAttributeQuotes: true,  //尽可能地删除html属性的引号
+                removeRedundantAttributes: true,  //当属性值是默认值时删除该属性
+                useShortDoctype: true,  //doctype使用简短形式(h5)
+                //removeOptionalTags: true,  //尽量移除不需要的闭合标签
+                removeEmptyAttributes: true,  //删除所有空格作属性值 <input id="" /> ==> <input />
+                removeScriptTypeAttributes: true,  //删除<script>的type="text/javascript"
+                removeStyleLinkTypeAttributes: true,  //删除<style>和<link>的type="text/css"
+                minifyJS: true,  //压缩页面JS
+                minifyCSS: true  //压缩页面CSS
+            }
+        };
+    }else{
+        var conf = {
+            filename: './application/views/' + pathname + '.html', // html 文件输出路径
+            template: pages[pathname], // 模板路径
+            inject: true,              // js 插入位置
+        };
+    }
     if (pathname in module.exports.entry) {
         conf.chunks = ['commons', pathname];
-        //conf.hash = false;
     }
     // 需要生成几个 html 文件，就配置几个 HtmlWebpackPlugin 对象
     module.exports.plugins.push(new HtmlWebpackPlugin(conf));

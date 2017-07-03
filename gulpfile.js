@@ -87,7 +87,7 @@ gulp.task('clean:app', function () {
     .pipe(clean());
 });
 
-// 从命令行传递参数
+// 获取从命令行传递参数区分是开发环境（gulp --env dev）还是生产环境（gulp --env production）
 var knownOptions = {
     string: 'env',
     default: { env: process.env.NODE_ENV || 'dev' }
@@ -109,7 +109,7 @@ gulp.task('default', function() {
         },
         startPath: "application/views/index/index.html"
     });
-    if( options.env != 'app' ){
+    if( options.env != 'production' ){
         gulp.watch( "/assets/sass/*.scss", ['cssmin'] ); // 监听SASS
         gulp.watch( ["application/views/**/*.html", "public/css/**/*.css", "public/js/**/*.js"], reload ); // 监听html/css/js
     };
