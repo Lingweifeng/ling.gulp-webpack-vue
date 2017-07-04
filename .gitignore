@@ -2,5 +2,5 @@
 !.gitignore
 /node_modules
 /application
+/dev
 /public
-

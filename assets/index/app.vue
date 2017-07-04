@@ -1,12 +1,12 @@
 <!-- 简单写个title和一个循环 -->
 <template>
     <div id="example">
+        <img v-bind:src=imgUrl>
         <h1>{{ msg }}</h1>
         <ul>
             <li v-for="n in 5">{{ n }}</li>
         </ul>
     </div>
-    
 </template>
 
 <script>

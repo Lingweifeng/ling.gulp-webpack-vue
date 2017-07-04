@@ -24,6 +24,16 @@ function getEntry(globPath) {
 var entries = getEntry( './assets/**/*.js'); // 获得入口 js 文件
 var chunks = Object.keys(entries);
 
+// 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env production
+var knownOptions = {
+    string: 'env',
+    default: { env: process.env.NODE_ENV || 'dev' }
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
+
+console.log( options.env );
+
 module.exports = {
     devtool: 'eval-source-map',
     entry: entries,
@@ -31,7 +41,7 @@ module.exports = {
     output: {
         //path: path.resolve(__dirname, projectName), // __dirname当前项目目录
         publicPath: '/',                  // html, css, js 图片等资源文件的 server 上的路径
-        filename: 'public/js/[name].js'         // 每个入口 js 文件的生成配置
+        filename: options.env == 'production'? 'public/js/[name].js' : 'dev/public/js/[name].js'         // 每个入口 js 文件的生成配置
         //chunkFilename: 'public/js/[id].js'
     },
     resolve: {
@@ -65,7 +75,7 @@ module.exports = {
                 test: /\.(png|jpg|gif|jpeg)$/, //处理css文件中的背景图片
                 //当图片大小小于这个限制的时候，会自动启用base64编码图片。减少http请求,提高性能
                 use: [{
-                    loader: 'url-loader?name='+ '/public/[name].[hash:4].[ext]',
+                    loader: 'url-loader?name='+'/public/[name].[hash:4].[ext]',
                     options: {
                       limit: 8192
                     }  
@@ -84,7 +94,7 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: 'public/css/[name].css'
+            filename: options.env == 'production'? 'public/css/[name].css' : 'dev/public/css/[name].css'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
@@ -93,16 +103,6 @@ module.exports = {
         })
     ]
 }
-
-// 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env production
-var knownOptions = {
-    string: 'env',
-    default: { env: process.env.NODE_ENV || 'dev' }
-};
-
-var options = minimist(process.argv.slice(2), knownOptions);
-
-console.log( options.env );
 
 // 生产环境配置
 if( options.env == 'production' ){
@@ -147,7 +147,7 @@ for (var pathname in pages) {
         };
     }else{
         var conf = {
-            filename: './application/views/' + pathname + '.html', // html 文件输出路径
+            filename: './dev/application/views/' + pathname + '.html', // html 文件输出路径
             template: pages[pathname], // 模板路径
             inject: true,              // js 插入位置
         };

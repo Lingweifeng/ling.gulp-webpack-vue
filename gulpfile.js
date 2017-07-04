@@ -98,19 +98,27 @@ var options = minimist(process.argv.slice(2), knownOptions);
 // 默认开发模式：gulp；生产模式要传入参数：gulp --env app
 gulp.task('default', function() {
     webpack( require('./webpack.config.js'), function(err, stats) {
-        /*if(err) throw new gutil.PluginError("webpack", err);
+        if(err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString({
             
-        }));*/
+        }));
     });
-    browserSync.init({
-        server: {
-            baseDir: "./",
-        },
-        startPath: "application/views/index/index.html"
-    });
+    // 启动browserSync服务器
     if( options.env != 'production' ){
-        gulp.watch( "/assets/sass/*.scss", ['cssmin'] ); // 监听SASS
-        gulp.watch( ["application/views/**/*.html", "public/css/**/*.css", "public/js/**/*.js"], reload ); // 监听html/css/js
+        browserSync.init({
+            server: {
+                baseDir: "./",
+            },
+            startPath: "dev/application/views/index/index.html"
+        });
+        gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( ["dev/application/views/**/*.html", "dev/public/css/**/*.css", "dev/public/js/**/*.js"], reload ); // 监听html/css/js
+    }else{
+        browserSync.init({
+            server: {
+                baseDir: "./",
+            },
+            startPath: "application/views/index/index.html"
+        });
     };
 });
