@@ -12,7 +12,7 @@ gulp || gulp --env dev
 
 三.进入打包模式，页面视图打包到application文件夹；静态资源打包到public文件夹：
 ```
-gulp build
+gulp --env production
 ```
 1.页面视图自动生成并引用压缩文件(js/css生成带md5后缀的静态文件引用)<br>
 2.images文件夹图片压缩<br>
