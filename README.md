@@ -14,6 +14,4 @@ gulp || gulp --env dev
 ```
 gulp --env production
 ```
-1.页面视图自动生成并引用压缩文件(js/css生成带md5后缀的静态文件引用)<br>
-2.images文件夹图片压缩<br>
-3.小图片使用base64(详见首页示例)
+页面视图自动生成并引用压缩文件(js/css生成带md5后缀的静态文件引用)<br>
