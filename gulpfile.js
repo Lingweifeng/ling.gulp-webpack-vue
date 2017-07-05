@@ -102,23 +102,23 @@ gulp.task('default', function() {
         gutil.log("[webpack]", stats.toString({
             
         }));
+        // 启动browserSync服务器
+        if( options.env != 'production' ){
+            browserSync.init({
+                server: {
+                    baseDir: "./",
+                },
+                startPath: "dev/application/views/index/index.html"
+            });
+            gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
+            gulp.watch( ["dev/application/views/**/*.html", "dev/public/css/**/*.css", "dev/public/js/**/*.js"], reload ); // 监听html/css/js
+        }else{
+            browserSync.init({
+                server: {
+                    baseDir: "./",
+                },
+                startPath: "application/views/index/index.html"
+            });
+        };
     });
-    // 启动browserSync服务器
-    if( options.env != 'production' ){
-        browserSync.init({
-            server: {
-                baseDir: "./",
-            },
-            startPath: "dev/application/views/index/index.html"
-        });
-        gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
-        gulp.watch( ["dev/application/views/**/*.html", "dev/public/css/**/*.css", "dev/public/js/**/*.js"], reload ); // 监听html/css/js
-    }else{
-        browserSync.init({
-            server: {
-                baseDir: "./",
-            },
-            startPath: "application/views/index/index.html"
-        });
-    };
 });
