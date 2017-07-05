@@ -6,7 +6,11 @@ npm install --save-dev
 ```
 二.进入开发模式：
 ```
-gulp || gulp --env dev
+gulp
+```
+或者
+```
+gulp --env dev
 ```
 监测.vue文件，自动执行webpack打包文件到dev；同步监测html/js/css文件，自动刷新浏览器<br>
 
