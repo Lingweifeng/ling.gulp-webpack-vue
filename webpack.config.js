@@ -145,6 +145,12 @@ for (var pathname in pages) {
                 minifyCSS: true  //压缩页面CSS
             }
         };
+    }else if( options.env == 'static' ){
+        var conf = {
+            filename: './static/' + pathname + '.html', // html 文件输出路径
+            template: pages[pathname], // 模板路径
+            inject: true,              // js 插入位置
+        };
     }else{
         var conf = {
             filename: './dev/application/views/' + pathname + '.html', // html 文件输出路径

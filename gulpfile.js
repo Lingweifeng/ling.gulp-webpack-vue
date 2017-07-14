@@ -103,7 +103,7 @@ gulp.task('default', function() {
             
         }));
     });
-    // 启动browserSync服务器
+    // 开发环境：启动browserSync服务器监测文件变化
     if( options.env != 'production' ){
         browserSync.init({
             server: {
@@ -113,6 +113,17 @@ gulp.task('default', function() {
         });
         gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
         gulp.watch( ["dev/application/views/**/*.html", "dev/public/css/**/*.css", "dev/public/js/**/*.js"], reload ); // 监听html/css/js
+    // 纯静态环境：目录结构简化
+    }else if( options.env == 'static' ){
+        browserSync.init({
+            server: {
+                baseDir: "./",
+            },
+            startPath: "static/index/index.html"
+        });
+        gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( ["static/application/views/**/*.html", "static/public/css/**/*.css", "static/public/js/**/*.js"], reload ); // 监听html/css/js
+    // 线上环境：目录结构复杂
     }else{
         browserSync.init({
             server: {
