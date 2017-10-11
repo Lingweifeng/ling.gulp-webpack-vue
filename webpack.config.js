@@ -35,13 +35,13 @@ var options = minimist(process.argv.slice(2), knownOptions);
 console.log( options.env );
 
 module.exports = {
-    devtool: 'eval-source-map',
+    devtool: options.env == 'production'? false : '#source-map',
     entry: entries,
-    watch: true,
+    watch: options.env == 'production'? false : true,
     output: {
-        //path: path.resolve(__dirname, projectName), // __dirname当前项目目录
+        path: options.env == 'production'? path.resolve(__dirname, 'dist') : path.resolve(__dirname, 'dev'), // __dirname当前项目目录
         publicPath: '/',                  // html, css, js 图片等资源文件的 server 上的路径
-        filename: options.env == 'production'? 'public/js/[name].js' : 'dev/public/js/[name].js'         // 每个入口 js 文件的生成配置
+        filename: 'public/js/[name].js'         // 每个入口 js 文件的生成配置
         //chunkFilename: 'public/js/[id].js'
     },
     resolve: {
@@ -75,9 +75,10 @@ module.exports = {
                 test: /\.(png|jpg|gif|jpeg)$/, //处理css文件中的背景图片
                 //当图片大小小于这个限制的时候，会自动启用base64编码图片。减少http请求,提高性能
                 use: [{
-                    loader: 'url-loader?name='+'/public/[name].[hash:4].[ext]',
+                    loader: 'url-loader',
                     options: {
-                      limit: 8192
+                      limit: 8192,
+                      name: 'public/images/[name].[hash:7].[ext]'
                     }  
                 }]
             }, {
@@ -89,12 +90,20 @@ module.exports = {
                     presets: ['es2015'],
                     plugins: ['transform-runtime']
                 }
+            }, {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                  limit: 10000,
+                  name: 'public/fonts/[name].[hash:7].[ext]'
+                }
             }
         ]
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: options.env == 'production'? 'public/css/[name].css' : 'dev/public/css/[name].css'
+            publicPath: '/',
+            filename: 'public/css/[name].css'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
@@ -153,7 +162,7 @@ for (var pathname in pages) {
         };
     }else{
         var conf = {
-            filename: './dev/application/views/' + pathname + '.html', // html 文件输出路径
+            filename: './application/views/' + pathname + '.html', // html 文件输出路径
             template: pages[pathname], // 模板路径
             inject: true,              // js 插入位置
         };

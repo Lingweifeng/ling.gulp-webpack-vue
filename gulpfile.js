@@ -9,6 +9,7 @@ var projectName = 'demo',
     watch = require( 'gulp-watch' ),
     sass = require( 'gulp-sass' ),
     cssmin = require( 'gulp-cssmin' ),
+    imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
     browserSync = require( 'browser-sync' ).create(),
     reload = browserSync.reload,
@@ -82,8 +83,12 @@ gulp.task( 'cssmin', ['sass'], function() {
 });
 
 // 清除生成的html和js、css、图片等静态资源
-gulp.task('clean:app', function () {
-  return gulp.src( ['/application/views/**/*', '/public/**/*' ], {read: false})
+gulp.task('clean:dev', function () {
+  return gulp.src( 'dev/', {read: false})
+    .pipe(clean());
+});
+gulp.task('clean:dist', function () {
+  return gulp.src( 'dist/', {read: false})
     .pipe(clean());
 });
 
@@ -95,24 +100,25 @@ var knownOptions = {
 
 var options = minimist(process.argv.slice(2), knownOptions);
 
-// 默认开发模式：gulp；生产模式要传入参数：gulp --env app
-gulp.task('default', function() {
+// 默认开发模式：gulp；static环境：gulp --env static; 生产模式要传入参数：gulp --env production
+gulp.task('webpack', function() {
     webpack( require('./webpack.config.js'), function(err, stats) {
         if(err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString({
-            
+            colors: true,
+            chunks: false
         }));
     });
     // 开发环境：启动browserSync服务器监测文件变化
     if( options.env != 'production' ){
         browserSync.init({
             server: {
-                baseDir: "./",
+                baseDir: "./dev/",
             },
-            startPath: "dev/application/views/index/index.html"
+            startPath: "application/views/index/index.html"
         });
-        gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
-        gulp.watch( ["dev/application/views/**/*.html", "dev/public/css/**/*.css", "dev/public/js/**/*.js"], reload ); // 监听html/css/js
+        gulp.watch( "./assets/**/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( ["./dev/application/views/**/*.html", "./dev/public/css/**/*.css", "./dev/public/js/**/*.js"], reload ); // 监听html/css/js
     // 纯静态环境：目录结构简化
     }else if( options.env == 'static' ){
         browserSync.init({
@@ -127,9 +133,17 @@ gulp.task('default', function() {
     }else{
         browserSync.init({
             server: {
-                baseDir: "./",
+                baseDir: "./dist/",
             },
             startPath: "application/views/index/index.html"
         });
     };
+});
+
+// 执行默认命令
+gulp.task('default', ['webpack'], function () {
+    // 图片压缩
+    return gulp.src( "dist/public/images/**/*" )
+        .pipe(imagemin())
+        .pipe( gulp.dest( "dist/public/images/" ) )
 });
