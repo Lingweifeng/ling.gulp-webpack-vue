@@ -1,6 +1,8 @@
 /**
  * gulp工作流
- *TODO: 1)解决sass,cssmin全部文件编译压缩的问题2)watch gulpfilejs自动重启;
+ *TODO: 1)整合路由：vue-router
+        2)雪碧图spritesmith;
+        3)watch gulpfilejs自动重启;
  * http://www.css88.com/doc/webpack2/guides/migrating/
  * http://vue-loader.vuejs.org/en/configurations/extract-css.html
  */
@@ -10,6 +12,7 @@ var projectName = 'demo',
     sass = require( 'gulp-sass' ),
     cssmin = require( 'gulp-cssmin' ),
     imagemin = require('gulp-imagemin'),
+    gulpif = require("gulp-if"),
     spritesmith = require("gulp-spritesmith"),
     rename = require('gulp-rename'),
     browserSync = require( 'browser-sync' ).create(),
@@ -72,7 +75,7 @@ gulp.task( 'sass', function() {
 
 // sass监控
 gulp.task('sass:watch', function () {
-  gulp.watch( "/src/sass/*.scss", ['sass']);
+  gulp.watch( "/src/compenents/common/sass/*.scss", ['sass']);
 });
 
 // css压缩
@@ -97,8 +100,8 @@ gulp.task('sprite', function () {
               sprite.name = 'sprite' + sprite.name;
             }
         }))
-        .pipe(gulpif('*.png', gulp.dest(projectName + 'assets/images/')))
-        .pipe(gulpif('*.scss', gulp.dest(projectName + 'assets/sass/')));
+        .pipe(gulpif('*.png', gulp.dest('src/components/common/images/')))
+        .pipe(gulpif('*.scss', gulp.dest('src/components/common/sass/')));
 });
 
 // 清除生成的html和js、css、图片等静态资源
@@ -146,6 +149,7 @@ gulp.task('webpack', [ 'clean' ], function() {
             startPath: "index/index.html"
         });
         gulp.watch( "./src/**/*.scss", ['cssmin'] ); // 监听SASS
+        //gulp.watch( "src/components/common/images/sprite/*.png", ['sprite'] ); // 监听sprite,自动生成雪碧图
         gulp.watch( ["./dev/**/*.html", "./dev/public/css/**/*.css", "./dev/public/js/**/*.js"], reload ); // 监听html/css/js
     // 纯静态环境：目录结构简化
     }else if( options.env == 'static' ){
