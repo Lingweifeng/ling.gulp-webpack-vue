@@ -21,7 +21,11 @@ function getEntry(globPath) {
     return entries;
 }
 
-var entries = getEntry( './assets/**/*.js'); // 获得入口 js 文件
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
+var entries = getEntry( './src/**/*.js'); // 获得入口 js 文件
 var chunks = Object.keys(entries);
 
 // 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env production
@@ -32,7 +36,17 @@ var knownOptions = {
 
 var options = minimist(process.argv.slice(2), knownOptions);
 
-console.log( options.env );
+//  外部框架CSS
+const extractLib = new ExtractTextPlugin({
+            publicPath: '/',
+            filename: 'public/css/lib.css'
+        });
+
+//  公共commonCSS
+const extractCommon = new ExtractTextPlugin({
+            publicPath: '/',
+            filename: 'public/css/[name].css'
+        });
 
 module.exports = {
     devtool: options.env == 'production'? false : '#source-map',
@@ -45,32 +59,43 @@ module.exports = {
         //chunkFilename: 'public/js/[id].js'
     },
     resolve: {
-        extensions: ['.js', '.vue']
+        extensions: ['.js', '.vue'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js', // 'vue/dist/vue.common.js' for webpack 1
+            '@': resolve('src'),
+        }
     },
     module: {
         rules: [
             {
+                test: /\.scss$/,
+                //loaders的处理顺序是从右到左的，这里就是先运行css-loader然后是style-loader
+                use: extractCommon.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader']
+                })
+            }, {
+                test: /\.css$/,
+                // use: [ 'style-loader', 'css-loader' ]
+                use: extractLib.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
+            }, {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
                     loaders: {
-                        css: ExtractTextPlugin.extract({
+                        css: extractCommon.extract({
                             use: [ 'css-loader?minimize=true' ],
                             fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
                         }),
-                        scss: ExtractTextPlugin.extract({
+                        scss: extractCommon.extract({
                             use: [ 'css-loader?minimize=true','sass-loader' ],
                             fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
                         })
                     }
                 }
-            }, {
-                test: /\.scss$/,
-                //loaders的处理顺序是从右到左的，这里就是先运行css-loader然后是style-loader
-                loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
-            }, {
-                test: /\.css$/,
-                loaders: ['style-loader', 'css-loader?sourceMap']
             }, {
                 test: /\.(png|jpg|gif|jpeg)$/, //处理css文件中的背景图片
                 //当图片大小小于这个限制的时候，会自动启用base64编码图片。减少http请求,提高性能
@@ -101,10 +126,17 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin({
+        /*new ExtractTextPlugin({
             publicPath: '/',
             filename: 'public/css/[name].css'
-        }),
+        }),*/
+        extractLib,
+        extractCommon,
+        /*new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            chunks: ['common/index'],
+            minChunks: 1
+        }),*/
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
             chunks: chunks,
@@ -130,12 +162,12 @@ if( options.env == 'production' ){
     );
 }
 
-var pages = getEntry( './assets/**/*.html');
+var pages = getEntry( './src/**/*.html');
 for (var pathname in pages) {
     // 配置生成的 html 文件，定义路径等，区分开发环境及生产环境
     if( options.env == 'production' ){
         var conf = {
-            filename: './application/views/' + pathname + '.html', // html 文件输出路径
+            filename: './' + pathname + '.html', // html 文件输出路径
             template: pages[pathname], // 模板路径
             inject: true,              // js 插入位置
             hash: true,
@@ -162,7 +194,7 @@ for (var pathname in pages) {
         };
     }else{
         var conf = {
-            filename: './application/views/' + pathname + '.html', // html 文件输出路径
+            filename: './' + pathname + '.html', // html 文件输出路径
             template: pages[pathname], // 模板路径
             inject: true,              // js 插入位置
         };

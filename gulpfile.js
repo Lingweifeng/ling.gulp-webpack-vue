@@ -12,6 +12,7 @@ var projectName = 'demo',
     imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
     browserSync = require( 'browser-sync' ).create(),
+    proxy = require('http-proxy-middleware'),
     reload = browserSync.reload,
     gulpWebpack = require( 'gulp-webpack' ),
     minimist = require( 'minimist' ),
@@ -52,43 +53,39 @@ gulp.task('dev', ['cssmin'], function() {
         server: {
             baseDir: "./",
         },
-        startPath: "/assets/index.html"
+        startPath: "/src/index.html"
     });
     //gulp.watch( "gulpfile.js", ['dev'] ); // 监听gulpfile.js
-    gulp.watch( "/assets/sass/*.scss", ['cssmin'] ); // 监听SASS
-    gulp.watch( "/assets/**/*.vue", function(){ console.log( 'vue changed!' ); } ); // 监听vue
-    gulp.watch( ["/assets/**/*.html", "/assets/css/**/*.min.css", "/assets/js/**/*.js"], reload ); // 监听html/css/js
+    gulp.watch( "/src/sass/*.scss", ['cssmin'] ); // 监听SASS
+    //gulp.watch( "/src/**/*.vue", function(){ console.log( 'vue changed!' ); } ); // 监听vue
+    gulp.watch( ["/src/**/*.html", "/src/css/**/*.min.css", "/src/js/**/*.js"], reload ); // 监听html/css/js
 });
 
 // scss编译后的css将注入到浏览器里实现更新
 gulp.task( 'sass', function() {
-    return gulp.src( "/assets/sass/*.scss" )
+    return gulp.src( "/src/sass/*.scss" )
         .pipe( sass({ outputStyle: 'expanded' }).on( 'error', function( err ){ console.log( err ); this.emit('end'); } ) ) // nested/expanded/compact/compressed
-        .pipe( gulp.dest("/assets/css") )
+        .pipe( gulp.dest("/src/css") )
         //.pipe( reload({stream: true}) );
 });
 
 // sass监控
 gulp.task('sass:watch', function () {
-  gulp.watch( "/assets/sass/*.scss", ['sass']);
+  gulp.watch( "/src/sass/*.scss", ['sass']);
 });
 
 // css压缩
 gulp.task( 'cssmin', ['sass'], function() {
-    return gulp.src( ["/assets/css/*.css", "!"+"/assets/css/*.min.css"] )
+    return gulp.src( ["/src/css/*.css", "!"+"/src/css/*.min.css"] )
         .pipe(cssmin()) // nested/expanded/compact/compressed
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('/assets/css'))
+        .pipe(gulp.dest('/src/css'))
         //.pipe(reload({stream: true}));
 });
 
 // 清除生成的html和js、css、图片等静态资源
-gulp.task('clean:dev', function () {
-  return gulp.src( 'dev/', {read: false})
-    .pipe(clean());
-});
-gulp.task('clean:dist', function () {
-  return gulp.src( 'dist/', {read: false})
+gulp.task('clean', function () {
+  return gulp.src([ 'dist/'], {read: false})
     .pipe(clean());
 });
 
@@ -101,7 +98,7 @@ var knownOptions = {
 var options = minimist(process.argv.slice(2), knownOptions);
 
 // 默认开发模式：gulp；static环境：gulp --env static; 生产模式要传入参数：gulp --env production
-gulp.task('webpack', function() {
+gulp.task('webpack', [ 'clean' ], function() {
     webpack( require('./webpack.config.js'), function(err, stats) {
         if(err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString({
@@ -109,16 +106,29 @@ gulp.task('webpack', function() {
             chunks: false
         }));
     });
+    // 跨域
+    const apiProxy = proxy('/open', // 接口需要代理的公用部分：‘/open’
+        {
+            target: 'http://10.8.34.17/open', // 此处需要改为相应api接口
+            changeOrigin: true,
+            ws: true,
+            pathRewrite: {
+            '^/open': ''
+        }
+    });
     // 开发环境：启动browserSync服务器监测文件变化
     if( options.env != 'production' ){
         browserSync.init({
             server: {
                 baseDir: "./dev/",
+                middleware: [
+                  apiProxy
+                ]
             },
-            startPath: "application/views/index/index.html"
+            startPath: "index/index.html"
         });
-        gulp.watch( "./assets/**/*.scss", ['cssmin'] ); // 监听SASS
-        gulp.watch( ["./dev/application/views/**/*.html", "./dev/public/css/**/*.css", "./dev/public/js/**/*.js"], reload ); // 监听html/css/js
+        gulp.watch( "./src/**/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( ["./dev/**/*.html", "./dev/public/css/**/*.css", "./dev/public/js/**/*.js"], reload ); // 监听html/css/js
     // 纯静态环境：目录结构简化
     }else if( options.env == 'static' ){
         browserSync.init({
@@ -127,15 +137,18 @@ gulp.task('webpack', function() {
             },
             startPath: "static/index/index.html"
         });
-        gulp.watch( "/assets/**/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( "/src/**/*.scss", ['cssmin'] ); // 监听SASS
         gulp.watch( ["static/application/views/**/*.html", "static/public/css/**/*.css", "static/public/js/**/*.js"], reload ); // 监听html/css/js
     // 线上环境：目录结构复杂
     }else{
         browserSync.init({
             server: {
                 baseDir: "./dist/",
+                middleware: [
+                  apiProxy
+                ]
             },
-            startPath: "application/views/index/index.html"
+            startPath: "index/index.html"
         });
     };
 });
@@ -146,4 +159,6 @@ gulp.task('default', ['webpack'], function () {
     return gulp.src( "dist/public/images/**/*" )
         .pipe(imagemin())
         .pipe( gulp.dest( "dist/public/images/" ) )
+
+    browserSync.reload;
 });

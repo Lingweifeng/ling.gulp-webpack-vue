@@ -1,0 +1,1235 @@
+@charset "UTF-8";
+// 导入公用部分
+@import "mixin.scss";
+
+.top{
+    position: relative;
+    background: url(../images/top_bg.png) center top no-repeat;
+    background-size: contain;
+    > .info{
+        padding: torem(30px) 0 torem(15px);
+        text-align: center;
+        > img{
+            margin: 0 auto 5px;
+            width: torem(100px);
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+        > h3{
+            padding: torem(5px) torem(10px);
+            display: inline-block;
+            position: relative;
+            margin: 0 auto;
+            font-weight: normal;
+            > span{
+                vertical-align: middle;
+                font-size: $fontsize-xl;
+                color: $black;
+            }
+            > img{
+                position: absolute;
+                top: torem(5px);
+                right: torem(-50px);
+                margin-left: 5px;
+                display: inline-block;
+                vertical-align: middle;
+                width: torem(50px);
+            }
+        }
+        > .coin{
+            padding: torem(8px) torem(10px);
+            font-size: $fontsize-xs;
+            > .icon, span{
+                position: static;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            > span{
+                margin-left: torem(5px);
+                line-height: 1.8;
+                color: $lightmore;
+            }
+        }
+    }
+    > .tips{
+        margin: 0;
+        border: 0;
+        padding: torem(1px) torem(10px) torem(2px);
+        background: rgba(0,0,0, 0.3);
+        position: absolute;
+        top: torem(10px);
+        right: torem(10px);
+        border-radius: 10px;
+        font-size: $fontsize-xxs;
+        color: $white;
+    }
+}
+.icon{
+    position: absolute;
+    top: torem(12px);
+    left: torem(-28px);
+    width: torem(18px);
+    height: torem(18px);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    $iconMenuNum: 8!default;
+    @for $i from 1 through $iconMenuNum{
+        &.icon-menu-#{$i} {
+            background-image: url(../images/icon/icon_menu_0#{$i}.png);
+        }
+    }
+    &.icon-user-orange{
+        background-image: url(../images/icon/icon_user_orange.png);
+    }
+    &.icon-clock{
+        background-image: url(../images/icon/icon_clock.png);
+    }
+    &.icon-book{
+        background-image: url(../images/icon/icon_book.png);
+    }
+    &.icon-coin{
+        background-image: url(../images/icon/icon_menu_01.png);
+    }
+    &.icon-coin-orange{
+        background-image: url(../images/icon/icon_coin_orange.png);
+    }
+    &.icon-earth{
+        background-image: url(../images/icon/icon_earth.png);
+    }
+    &.icon-crown{
+        top: 0;
+        left: 0;
+        width: torem(60px);
+        height: torem(30px);
+        background-image: url(../images/icon/icon_crown.png);
+    }
+    &.icon-user-gray{
+        background-image: url(../images/icon/icon_user_gray.png);
+    }
+    &.icon-lock-gray{
+        background-image: url(../images/icon/icon_lock_gray.png);
+    }
+    &.icon-tips{
+        background-image: url(../images/icon/icon_tips.png);
+    }
+    &.icon-search{
+        top: 0;
+        left: 0;
+        background-image: url(../images/icon/icon_search.png);
+    }
+    &.icon-exit{
+        position: static;
+        display: inline-block;
+        vertical-align: -2px;
+        background-image: url(../images/icon/icon_exit.png);
+    }
+    &.icon-refresh{
+        position: static;
+        display: inline-block;
+        vertical-align: -2px;
+        background-image: url(../images/icon/icon_refresh.png);
+    }
+    &.icon-email{
+        position: static;
+        display: inline-block;
+        background-image: url(../images/icon/icon_email.png);
+    }
+    &.icon-phone{
+        position: static;
+        display: inline-block;
+        background-image: url(../images/icon/icon_phone.png);
+    }
+    &.icon-close{
+        background-image: url(../images/icon/icon_close.png);
+    }
+}
+.icon-badge{
+    position: absolute;
+    top: 0;
+    right: -110%;
+    display: inline-block;
+    text-align: left;
+    min-width: torem(100px);
+    height: torem(30px);
+    padding: 0 0 0 torem(23px);
+    > .icon{
+        position: absolute;
+        top: torem(2px);
+        left: 0;
+        z-index: 9;
+        width: torem(30px);
+        height: torem(30px);
+        background: url(../images/icon/icon_badge.png) left center no-repeat;
+        background-size: contain;
+    }
+    > b{
+        padding: torem(1px) torem(7px) torem(2px) torem(9px);
+        border-radius: 0 torem(8px) torem(8px) 0;
+        font-size: $fontsize-xxxs;
+        color: $white;
+        background-color: #fcb643;
+    }
+}
+.badge{
+    display: inline-block;
+    vertical-align: middle;
+    width: torem(50px);
+    height: torem(50px);
+    line-height: torem(50px);
+    text-align: center;
+    border-radius: 50%;
+    background-color: $lightmore2;
+    font-size: $fontsize-l;
+    color: $white;
+    &.lightblue{
+        background-color: $lightblue;
+    }
+    &.orange{
+        background-color: $orange;
+    }
+    &.pink{
+        background-color: $pink;
+    }
+    &.small{
+        width: torem(22px);
+        height: torem(22px);
+        line-height: torem(22px);
+        font-size: $fontsize-xxxs;
+    }
+    &.xsmall{
+        width: torem(8px);
+        height: torem(8px);
+        line-height: torem(8px);
+    }
+}
+.badge-wrap{
+    margin: 0 torem(40px) torem(20px);
+    display: inline-block;
+    vertical-align: middle;
+    > .badge{
+        display: block;
+        width: torem(40px);
+        height: torem(40px);
+        line-height: torem(40px);
+        font-size: $fontsize-ms;
+        margin: 0 auto torem(6px);
+        background-color: $white;
+        color: $green;
+        &.green{
+            border: 1px solid $green;
+        }
+    }
+    > .badge-text{
+        display: block;
+        text-align: center;
+        color: $black;
+    }
+}
+.item{
+    background: #fff;
+    box-shadow: 0 0 15px #ddd;
+    margin-bottom: torem(15px);
+    > a, > span{
+        position: relative;
+        display: block;
+        padding: torem(15px) 0;
+        margin: 0 torem(10px) 0 torem(40px);
+        border-bottom: 1px solid #ccc;
+        > b{
+            color: $black;
+        }
+        > span{
+            > b{
+                color: $lightmore;
+            }
+            > i{
+                margin-left: torem(10px);
+                display: inline-block;
+                width: torem(10px);
+                height: torem(10px);
+                background: url(../images/icon/icon_arrow_right.png) center center no-repeat;
+                background-size: contain;
+            }
+        }
+        &:last-child{
+            border-bottom: none;
+        }
+    }
+}
+.mask{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    background: rgba(0,0,0,0.5);
+}
+.modal{
+    display: none;
+    position: absolute;
+    top: 50%;
+    margin-top: torem(-120px);
+    left: torem(30px);
+    right: torem(30px);
+    z-index: 10;
+    border-radius: 6px;
+    background: $white;
+    > .modal-body{
+        padding: torem(30px);
+    }
+    .txtinput{
+        font-size: $fontsize-m;
+        background: $gray;
+    }
+    .btn-white{
+        padding: torem(15px) torem(20px);
+        font-size: $fontsize-m;
+        background: $gray;
+        &:focus, &:hover{
+            background: $green;
+            color: $black;
+        }
+    }
+    > .modal-close{
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        z-index: 9;
+        width: torem(40px);
+        height: torem(40px);
+        background: url(../images/modal-close.png) center center no-repeat;
+        background-size: contain;
+    }
+    &.modal-static{
+        > .modal-body{
+            padding: torem(20px);
+        }
+    }
+}
+
+.tab{
+    .tab-head{
+        margin: 20px 10px 15px;
+        text-align: center;
+        > li{
+            padding: 0 10px;
+            display: inline-block;
+            vertical-align: middle;
+            color: $lightmore;
+            > a{
+                display: block;
+                padding: 10px 0;
+                color: $lightmore;
+                font-size: $fontsize-m;
+            }
+            &.active > a{
+                color: $green;
+                border-bottom: 1px solid $green;
+            }
+            &.vline{
+                padding: 0;
+                font-size: $fontsize-m;
+            }
+
+        }
+    }
+    .tab-content{
+        display: none;
+        padding: torem(18px) torem(18px);
+        &.active{
+            display: block;
+        }
+    }
+}
+.gift-item{
+    display: block;
+    position: relative;
+    margin-bottom: torem(18px);
+    border-radius: 5px;
+    box-shadow: 0 5px 5px 0 #ccc;
+    background: $white;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    > .photo{
+        position: relative;
+        > img{
+            border-radius: 5px 5px 0 0;
+        }
+        > .mask{ 
+            padding: 0 torem(10px);
+            position: absolute;
+            top: auto;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: torem(28px);
+            line-height: torem(28px);
+            overflow: hidden;
+            color: $white;
+            background: rgba(0,0,0,.5);
+        }
+    }
+    > .info{
+        padding: torem(10px) torem(15px);
+        > .float-left{
+            padding: torem(7px) 0;
+            font-size: $fontsize-ms;
+            color: $lightmore;
+        }
+        .btn{
+            font-size: $fontsize-s;
+            padding: 3px 18px 5px;
+        }
+        > .float-right > span{
+            display: block;
+            padding: torem(7px) 0;
+            font-size: $fontsize-ms;
+            color: $lightmore;
+        }
+    }
+    > .icon-badge{
+        top: torem(10px);
+        right: auto;
+        left: torem(10px);
+        padding-top: torem(10px);
+    }
+    .mask{
+        height: torem(113px);
+        border-radius: 5px;
+        background: rgba(0,0,0,.5);
+        > span{
+            margin: torem(25px) auto;
+            width: torem(70px);
+            height: torem(70px);
+            line-height: torem(60px);
+            text-align: center;
+            display: block;
+            border: 3px solid $white;
+            border-radius: 50%;
+            font-size: $fontsize-m;
+            color: $white;
+            transform: rotate(-20deg);
+        }
+        &.receive > span{
+            color: $green;
+            border-color: $green;
+        }
+        &.notreceive > span{
+            color: $orange;
+            border-color: $orange;
+        }
+    }
+}
+
+.code-main{
+    padding: torem(40px) torem(80px);
+    background:url(../images/bg_code.jpg) center torem(30px) no-repeat;
+    background-size: contain;
+    > .user{
+        > img{
+            width: torem(54px);
+            height: torem(54px);
+            border: 2px solid $white;
+            border-radius: 50%;
+            box-shadow: 0 0 5px 0 $lightmore;
+        }
+        > .txt{
+            padding: 5px 10px;
+            font-weight: bold;
+            line-height: 1.5;
+            font-size: $fontsize-s;
+        }
+    }
+    > .code-wrap{
+        margin: torem(10px);
+        position: relative;
+        padding-bottom: torem(60px);
+        background: url(../images/bg_code_bottom.png) torem(10px) bottom no-repeat;
+        background-size: contain;
+        > .tit{
+            text-align: center;
+            font-weight: normal;
+            font-size: $fontsize-xl;
+            color: $orange;
+        }
+        > .code{
+            padding: torem(10px);
+            border-radius: 10px;
+            background: $orange;
+            > img{
+                border: 10px solid $white;
+            }
+            > p{
+                padding: 5px 12px 12px;
+                text-align: center;
+                font-weight: bold;
+                font-size: $fontsize-ms;
+                background: $white;
+            }
+        }
+    }
+}
+.tips{
+    margin: 10px;
+    position: relative;
+    display: inline-block;
+    padding: torem(5px) torem(10px);
+    line-height: 150%;
+    background: $white;
+    border: 1px solid $lightmost;
+    border-radius: 5px;
+    font-size: $fontsize-xxs;
+    > .triangle{
+        position: absolute;
+        top: torem(-15px);
+        left: torem(10px);
+        z-index: 9;
+        border-width: torem(8px) torem(6px);
+        border-color: transparent transparent $lightmost transparent;
+        overflow: visible;
+        > .triangle{
+            z-index: 10;
+            top: torem(2px);
+            left: torem(-6px);
+            border-width: torem(8px) torem(6px);
+            border-color: transparent transparent $white transparent;
+        }
+    }
+}
+.footer{
+    padding: torem(50px) torem(20px);
+    text-align: center;
+    &.footer-code{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: torem(123px);
+        background: url(../images/bg_bottom.png) center center no-repeat;
+        background-size: contain;
+        > p{
+            font-size: $fontsize-ms;
+            line-height: 1.5;
+            color: $white;
+        }
+    }
+}
+
+.btn-group{
+    padding: torem(15px);
+}
+
+.activity-main, .scroll-main{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: torem(40px);
+    width: 100%;
+    overflow: auto;
+    background: $white;
+    font-size: $fontsize-ms;
+    > .describe{
+        padding: torem(20px) torem(25px) torem(25px) torem(50px);
+        .list{
+            line-height: 1.6;
+            > dt{
+                margin-bottom: torem(5px);
+                position: relative;
+                color: $orange;
+                font-weight: bold;
+                > .icon{
+                    width: torem(22px);
+                    height: torem(22px);
+                    top: torem(1px);
+                    left: torem(-30px);
+                }
+            }
+            > dd{
+                margin-bottom: torem(10px);
+            }
+        }
+    }
+}
+.bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: torem(10px) torem(20px);
+    border-top: 1px solid #e5e5e5;
+    background: $white;
+}
+.integral-wrap{
+    > h3{
+        padding: torem(20px) torem(20px) torem(10px);
+        text-align: center;
+        font-size: $fontsize-l;
+        font-weight: normal;
+        color: $orange;
+    }
+    > .list{
+        padding: torem(10px) 0 0 torem(10px);
+        > li{
+            position: relative;
+            padding: torem(5px);
+            float: left;
+            width: torem(111px);
+            height: torem(150px);
+            margin: 0 torem(10px) torem(15px) 0;
+            border: 4px solid $lightmost;
+            border-radius: 8px;
+            text-align: center;
+            background: $white;
+            > h3{
+                padding: torem(6px);
+                font-size: $fontsize-s;
+                font-weight: normal;
+                line-height: 1.3;
+            }
+            > p{
+                font-size: $fontsize-l;
+                > .icon{
+                    position: static;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                > span{
+                    display: inline-block;
+                    vertical-align: middle;
+                    color: $orange;
+                }
+            }
+            > .bg{
+                display: block;
+                position: absolute;
+                left: torem(15px);
+                bottom: torem(10px);
+                width: torem(70px);
+                height: torem(45px);
+            }
+            $integralbgNum: 6!default;
+            @for $i from 1 through $integralbgNum{
+                &:nth-child(#{$i}) > .bg {
+                    background: url(../images/integral_#{$i}.png) center center no-repeat;
+                    background-size: contain;
+                }
+            }
+        }
+    }
+}
+.scroll-main, .integral-my{
+    .tab{
+        > .tab-head{
+            margin: 0;
+            padding: torem(10px);
+            > li{
+                color: $white;
+                > a{
+                    color: $white;
+                    border-bottom-color: $white;
+                }
+            }
+        }
+    }
+    > .top > .info{
+        position: relative;
+        padding-top: torem(10px);
+        > .icon-crown{
+            top: torem(-10px);
+            left: 50%;
+            margin-left: torem(-32px);
+        }
+    }
+    .top.notab > .info{
+        padding-top: torem(30px);
+    }
+}
+.integral-my{
+    .integral-wrap{
+        background: $white;
+        border-top: 1px solid $lightmost;
+    }
+}
+.ranking{
+    padding: torem(12px);
+    border-top: 1px solid $lightmost;
+    background: $white;
+    > h3{
+        margin-bottom: torem(10px);
+        > .icon{
+            position: static;
+            display: inline-block;
+            vertical-align: middle;
+            float: right;
+        }
+    }
+    .item{
+        box-shadow: none;
+        margin-bottom: torem(20px);
+        > dt{
+            padding: 0 torem(10px);
+            float: left;
+            > b, > img, > span{
+                display: inline-block;
+                vertical-align: middle;
+            }
+            > b{
+                margin-right: torem(15px);
+            }
+            > img{
+                width: torem(50px);
+                height: torem(50px);
+            }
+            > span{
+                margin-left: torem(15px);
+                color: $lightmore;
+            }
+        }
+        > dd{
+            color: $black;
+            padding: torem(15px) torem(10px);
+            float: right;
+        }
+        &:nth-child(1), &:nth-child(2), &:nth-child(3){
+            > dt{
+                > b{
+                    color: $orange;
+                }
+                > img{
+                    border-color: $orange;
+                }
+            }
+        }
+    }
+    &.noranking{
+        .item{
+            &:nth-child(1), &:nth-child(2), &:nth-child(3){
+                > dt{
+                    > img{
+                        border-color: $white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.form-wrap{
+    padding: torem(20px);
+}
+.form-title{
+    text-align: center;
+    padding-top: 0;
+    margin-bottom: torem(15px);
+    font-size: $fontsize-m;
+    font-weight: normal;
+}
+select > option{
+    text-align: center;
+}
+.form-item{
+    margin-bottom: torem(20px);
+    > label{
+        padding-right: torem(10px);
+        font-size: $fontsize-m;
+        color: $lightmore;
+        > .required{
+            padding: 0 torem(5px);
+            color: $orange;
+        }
+    }
+    > .txtinput{
+        padding: torem(15px);
+        border: 1px solid $lightmost;
+        border-radius: 6px;
+        font-size: $fontsize-m;
+        color: $lightmore;
+    }
+    &.form-block{
+        position: relative;
+        display: block;
+        width: 100%;
+        > .txtinput{
+            display: block;
+            width: 100%;
+        }
+        > label{
+            display: block;
+            margin-bottom: torem(8px);
+            /* 
+            position: absolute;
+            top: torem(5px);
+            bottom: torem(5px);
+            left: 0; */
+            width: 100%;
+            line-height: torem(20px);
+            color: $black;
+        }
+    }
+    &.last-child{
+        margin-bottom: 0;
+    }
+}
+.form-hasclose{
+    position: relative;
+    > .txtinput{
+        padding-right: torem(40px);
+    }
+    > .icon{
+        width: torem(15px);
+        top: torem(45px);
+        left: auto;
+        right: torem(20px);
+    }
+}
+.form-hasradio{
+    position: relative;
+    > .radio-wrap{
+        position: absolute;
+        top: torem(46px);
+        right: torem(20px);
+    }
+}
+.form-hasbtn{
+    position: relative;
+    padding-right: torem(70px);
+    > .btn{
+        position: absolute;
+        top: torem(30px);
+        right: 0;
+        padding: torem(14px);
+        font-size: $fontsize-ms;
+    }
+    &.form-hasclose{
+        > .icon{
+            right: torem(85px);
+        }
+    }
+    &.form-hasradio{
+        position: relative;
+        > .radio-wrap{
+            right: torem(85px);
+        }
+    }
+}
+.form-control-static{
+    padding: torem(20px);
+    border: 1px solid $lightmost;
+    border-radius: 10px;
+    font-size: $fontsize-m;
+    background-color: $lightmost;
+    &.hasicon{
+        padding: torem(20px) torem(40px);
+    }
+    > h3{
+        position: relative;
+        > .icon{
+            position: absolute;
+            top: 0;
+            left: torem(-25px);
+        }
+        padding: 0;
+        margin-bottom: torem(10px);
+        font-size: $fontsize-m;
+    }
+    > p{
+        font-size: $fontsize-ms;
+        line-height: 1.5;
+        color: $light;
+    }
+}
+
+.banner{
+    display: block;
+    position: relative;
+    > .banner-tips{
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 9;
+        width: 100%;
+        border-bottom: 1px solid $green;
+        > b{
+            position: relative;
+            display: inline-block;
+            padding: 0 torem(26px) 0 0;
+            text-align: left;
+            font-size: $fontsize-xs;
+            background: transparent url(../images/banner_txt_bg.png) right center no-repeat;
+            background-size: contain;
+            > i{
+                display: block;
+                padding: torem(5px) torem(10px);
+                width: 100%;
+                height: 100%;
+                color: $white;
+                background: $green;
+            }
+        }
+    }
+}
+
+.news-list{
+    padding: torem(20px)!important;
+}
+
+body.login{
+    background: $white url(../images/login_top_bg.png) center top no-repeat;
+    background-size: contain;
+}
+.login{
+    .login-top{
+        > h1{
+            margin-bottom: torem(50px);
+            padding: torem(50px) 0;
+            text-align: center;
+            font-size: torem(30px);
+            line-height: 1.2;
+            color: $white;
+            > span{
+                font-size: torem(40px);
+                color: $white;
+            }
+        }
+    }
+    .login-form{
+        padding: torem(30px);
+        .form-item{
+            margin-bottom: 0;
+            > .txtinput{
+                padding-left: torem(60px);
+                border-radius: 0 0 10px 10px;
+            }
+            > .icon{
+                top: torem(17px);
+                left: torem(20px);
+                width: torem(30px);
+                padding-right: torem(10px);
+                border-right: 1px solid $lightmost;
+                background-position: left center;
+            }
+            &:first-child{
+                .txtinput{
+                    padding-left: torem(60px);
+                    border-bottom: 0;
+                    border-radius: 10px 10px 0 0;
+                }
+            }
+            &.form-tips{
+                margin-bottom: torem(10px);
+                padding: torem(10px) 0 torem(10px) torem(50px);
+                > span{
+                    vertical-align: middle;
+                    color: $orange;
+                    > .icon{
+                        position: static;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: torem(8px);
+                    }
+                }
+            }
+            &.form-btn{
+                padding: torem(30px);
+            }
+        }
+    }
+}
+.switch,.tabhead{
+    text-align: center;
+    width: torem(150px);
+    margin: torem(20px) auto;
+    border-radius: 4px;
+    box-shadow: 0 0 10px $lightmost;
+    > label, > a{
+        display: block;
+        float: left;
+        padding: torem(8px);
+        width: 50%;
+        background: $white;
+        border: 1px solid $lightmost;
+        border-radius: 0 4px 4px 0;
+        border-left: 0;
+        color: $lightmore;
+        &:first-child{
+            border-left: 1px solid $lightmost;
+            border-radius: 4px 0 0 4px;
+        }
+        &.active{
+            background-color: $green;
+            border-color: $green;
+            color: $white;
+        }
+        > input{
+            width: 0;
+            height: 0;
+            font-size: 0;
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
+.tabcontent{
+    padding-bottom: torem(60px);
+    display: none;
+    .form-wrap{
+        padding: torem(10px) torem(20px) 0;
+    }
+    .form-item{
+        margin-bottom: torem(15px);
+        > label{
+            font-size: $fontsize-s;
+        }
+    }
+}
+.search{
+    .search-form{
+        margin-bottom: torem(20px);
+        padding: 0 torem(20px);
+        position: relative;
+        .icon{
+            width: torem(15px);
+            top: torem(10px);
+            left: torem(30px);
+
+        }
+        input{
+            width: torem(280px);
+            padding: torem(10px) torem(4px) torem(10px) torem(30px);
+            border: 1px solid $lightmost;
+            border-radius: 4px;
+            box-shadow: 0 0 5px $lightmost;
+        }
+        .btn-link{
+            margin-left: torem(10px);
+            color: $light;
+        }
+    }
+    .search-result{
+        > .list{
+            > li{
+                position: relative;
+                > .badge{
+                    position: absolute;
+                    top: torem(8px);
+                    left: torem(15px);
+                    > .badge.xsmall{
+                        position: absolute;
+                        top: torem(6px);
+                        right: 0;
+                    }
+                }
+                > .content{
+                    margin-left: torem(70px);
+                    padding: torem(10px) torem(10px);
+                    width: torem(305px);
+                    border-bottom: 1px solid $lightmost;
+                    > .name{
+                        > span{
+                            display: block;
+                            margin-bottom: torem(10px);
+                            font-size: $fontsize-m;
+                            color: $black;
+                        }
+                        > small{
+                            color: $lightmore;
+                        }
+                    }
+                    > .info{
+                        text-align: right;
+                        > small{
+                            display: block;
+                            margin-bottom: torem(10px);
+                            color: $lightmore;
+                        }
+                    }
+                }
+                &:last-child{
+                    > .content{
+                        border-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.txtform{
+    margin: torem(20px);
+    padding: torem(15px);
+    border-radius: 6px;
+    background-color: #f6f6f6;
+    > form{
+        textarea{
+            display: block;
+            margin: 0 0 torem(20px);
+            width: 100%;
+            background-color: #f6f6f6;
+        }
+        > .form-btn{
+            text-align: center;
+            > .btn{
+                margin: 0 torem(5px);
+                padding: torem(5px) torem(50px);
+            }
+        }
+    }
+}
+
+.user-manage{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .search-form{
+        margin: torem(20px) 0;
+        > form > input{
+            width: 100%;
+        }
+    }
+    .search-result{
+        position: absolute;
+        top: torem(80px);
+        left: 0;
+        bottom: 0;
+        padding-bottom: torem(70px);
+        overflow: auto;
+    }
+    .search-bottom{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: torem(70px);
+        padding: torem(15px);
+    }
+}
+
+.timeaxis{
+    > .timeaxis-hasfloatbottom > .top{
+        text-align: center;
+        background-color: $white;
+        box-shadow: 0 0 5px $lightmost;
+        > .info{
+            > h3 > span{
+                font-size: $fontsize-m;
+            }
+            > .other{
+                display: block;
+                margin: torem(5px) 0;
+                color: $lightmore;
+            }
+        }
+    }
+    .history-tips{
+        margin: 0 torem(20px);
+        padding: torem(15px);
+        border-top: 1px solid $lightmost;
+        > p{
+            text-align: center;
+            > span{
+                padding-right: torem(10px);
+                vertical-align: middle;
+                color: $lightmore;
+            }
+            > .btn{
+                padding: torem(5px) torem(10px);
+            }
+        }
+    }
+    .list{
+        margin-top: torem(20px);
+        padding: torem(20px) torem(20px) 0 torem(10px);
+        .axis-item{
+            display: block;
+            margin: 0 0 0 torem(9px);
+            border-left: 1px dotted #ddd;
+            > i{
+                margin: torem(-5px) torem(10px) 0 torem(-6px);
+                display: inline-block;
+                vertical-align: middle;
+                width: torem(12px);
+                height: torem(12px);
+                border-radius: 50%;
+                background: $green;
+            }
+            > .con{
+                position: relative;
+                top: torem(-1px);
+                padding: 0 0 torem(30px);
+                > i{
+                    margin: torem(-8px) torem(10px) 0 torem(-6px);
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: torem(12px);
+                    height: torem(12px);
+                    border-radius: 50%;
+                    background: $green;
+                }
+                > .tips{
+                    display: block;
+                    padding: torem(10px) torem(15px);
+                    margin: torem(-45px) 0 torem(20px) torem(20px);
+                    box-shadow: 0 0 8px $lightmost;
+                    > h3{
+                        padding: 0;
+                        margin-bottom: torem(8px);
+                    }
+                    > p{
+                        font-size: $fontsize-xs;
+                        color: $lightmore;
+                    }
+                    > .date{
+                        position: absolute;
+                        top: torem(6px);
+                        right: torem(10px);
+                        color: $lightmore;
+                    }
+                    > .triangle{
+                        margin-top: torem(-5px);
+                        top: 50%;
+                        left: torem(-18px);
+                        border-width: torem(6px) torem(8px);
+                        border-color: transparent $lightmost transparent transparent;
+                        overflow: visible;
+                        > .triangle{
+                            top: 50%;
+                            left: torem(-5px);
+                            border-width: torem(6px) torem(8px);
+                            border-color: transparent $white transparent transparent;
+                        }
+                    }
+                }
+            }
+            &:last-child{
+                > .con{
+                    padding: 0;
+                }
+            }
+        }
+    }
+    > .btn-wrap{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        > .btn{
+            padding: torem(6px) torem(16px);
+            border-radius: 15px;
+            margin: 0 torem(5px);
+            font-size: $fontsize-ms;
+        }
+    }
+    .timeaxis-hasfloatbottom{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

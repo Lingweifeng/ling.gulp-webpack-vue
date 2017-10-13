@@ -9,13 +9,13 @@
 </template>
 
 <script>
-
+import Common from '../components/common/'
 import CompA from '../components/a/a.vue'
 import CompB from '../components/b/b.vue'
 export default {
     data () {
         return {
-            msg: 'this is aother moudle1234'
+            msg: 'this is aother moudle'
         }
     },
   components: {

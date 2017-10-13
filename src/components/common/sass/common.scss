@@ -1,0 +1,511 @@
+@charset "UTF-8";
+
+// 导入公用部分
+@import "mixin.scss";
+@import "sprite.scss";
+
+/* 
+html5doctor.com Reset Stylesheet
+v1.4.1 
+2010-03-01
+Author: Richard Clark - http://richclarkdesign.com
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-family:sans-serif;
+    color:#333;
+    vertical-align:baseline;
+    background:transparent;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    font-size : 20px;
+}
+
+body {
+    height: 100%;
+    line-height:1;
+    font-size: $fontsize-s;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-text-size-adjust: 100%; // 解决APP字体突然变大的问题
+    background: #f1f1f1;
+}
+body.light{
+    background: #f2f2f2;
+}
+
+:focus {
+    outline: 1;
+}
+
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary { 
+    display:block;
+}
+
+nav, ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+small {
+    font-size: torem(13px)
+}
+
+a {
+    margin:0;
+    padding:0;
+    border:0;
+    vertical-align:baseline;
+    background:transparent;
+    text-decoration: none;
+    box-sizing: border-box;
+    color: #eb711c;
+}
+
+b {
+    font-weight: normal
+}
+
+i, em {
+    font-style: normal;
+}
+
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted #000;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+// ios下消除内阴影
+input, textarea {
+    border: 0;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+/* custom font size */
+h1, h2, h3 {
+    padding: torem(10px);
+}
+h1 {
+    font-size: $fontsize-xl;
+}
+h2 {
+    font-size: $fontsize-m;
+}
+h3 {
+    font-size: $fontsize-ms;
+}
+h4 {
+    font-size: $fontsize-s;
+}
+
+sub, sup{
+    position: relative;
+    right: 8%;
+    top: -50%;
+    display: inline-block;
+    padding-right: torem(2px);
+    width: torem(20px);
+    height: torem(20px);
+    line-height: torem(20px);
+    background: $orange2;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: $fontsize-xs;
+}
+
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{*height:1%}
+
+.overflow-hidden{ height: 100%; overflow: hidden!important; }
+
+.triangle{
+    width: 0;
+    height: 0;
+    line-height: 0;
+    border-width: torem(4px) torem(8px);
+    font-size: 0;
+    overflow: hidden;
+    &.left{
+        border-style: dashed solid dashed dashed;
+        border-color: transparent #333 transparent transparent;
+    }
+    &.right{
+        border-style: dashed dashed dashed solid;
+        border-color: transparent transparent transparent #333;
+    }
+    &.top{
+        border-width: torem(8px) torem(4px);
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent #333 transparent;
+    }
+    &.bottom{
+        border-width: torem(8px) torem(4px);
+        border-style: solid dashed dashed dashed;
+        border-color: #333 transparent transparent transparent;
+    }
+}
+
+/* margin & padding */
+.mb-10{ margin-bottom: torem(10px)!important; }
+.mb-20{ margin-bottom: torem(20px)!important; }
+.mb-40{ margin-bottom: 40px!important; }
+.mb-1r{ margin-bottom: 1rem!important; }
+.mt-2r{ margin-top: 2rem!important; }
+.ml-1r{ margin-left: 1rem!important; }
+.ml-2r{ margin-left: 2rem!important; }
+.mr-2r{ margin-right: 2rem!important; }
+.mb-3r{ margin-bottom: 3rem!important; }
+.mt-3r{ margin-top: 3rem!important; }
+.ml-3r{ margin-left: 3rem!important; }
+.mr-3r{ margin-right: 3rem!important; }
+.mr-5{ margin-right: 5px!important; }
+.mr-1r{ margin-right: 1rem!important; }
+.padding-0{ padding: 0!important; }
+.padding-10{ padding: torem(10px)!important; }
+.padding-lr-0{ padding-left: 0!important; padding-right: 0!important; }
+
+// input
+.input{
+  vertical-align: middle;
+  padding: torem(8px);
+  border-radius: torem(3px);
+  border: 1px solid #ddd;
+  font-size: $fontsize-xs;
+}
+// btn
+.btn-wrap{
+    padding: torem(20px) 0;
+    clear: both;
+}
+.btn{
+    display: inline-block;
+    vertical-align: middle;
+    padding: torem(10px) torem(25px);
+    text-align: center;
+    background: $green;
+    border: 1px solid $green;
+    border-radius: torem(3px);
+    white-space: nowrap;
+    font-size: $fontsize-m;
+    line-height: 1.3;
+    color: #fff;
+}
+.btn-block{
+    display: block;
+    width: 100%;
+}
+.btn-default{
+    background: #999;
+    border-color: #999;
+}
+.btn-white{
+    background: #fff;
+    border: 1px solid $lightmost;
+    color: $lightmore;
+}
+.btn-blue{
+    border: 1px solid $blue;
+    background: $blue;
+    color: #fff;
+}
+.btn-orange{
+    border: 1px solid $orange;
+    background: $orange;
+    color: #fff;
+}
+.btn-lg{
+    padding: torem(12px) torem(30px);
+    font-size: $fontsize-l;
+}
+.btn-m{
+    min-width: torem(90px);
+    font-size: $fontsize-s;
+}
+.btn-sm{
+    padding: torem(5px) torem(10px);
+    font-size: $fontsize-s;
+}
+.btn-round{
+    border-radius: torem(25px);
+}
+.btn-shadow{
+    box-shadow: 2px 3px 10px $lightorange;
+}
+.btn-white.btn-shadow{
+    box-shadow: 0 0 10px $lightmost;
+}
+.block {
+    display: block!important;
+}
+
+// form
+.form-item{
+    margin-bottom: 20px;
+}
+.txtinput{
+    padding: 12px 12px;
+    border: 1px solid $white;
+}
+.txtinput-block{
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+}
+.radio-wrap{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding: 0 torem(20px);
+    width: torem(80px)!important;
+    height: torem(16px);
+    > .radio-input{
+        position: relative;
+        display: block;
+        width: torem(40px);
+        height: torem(16px);
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background: #f1f1f1;
+        > input{
+            opacity: 0;
+        }
+        > i{
+            display: block;
+            width: torem(20px);
+            height: torem(20px);
+            position: absolute;
+            top: torem(-3px);
+            background: $green;
+            border-radius: 50%;
+            box-shadow: $shadow-green;
+        }
+    }
+    > b{
+        position: absolute;
+        top: torem(1px);
+        display: block;
+        width: torem(20px);
+        white-space: nowrap;
+        &.first{
+           left: 0;
+           text-align: left;
+        }
+        &.second{
+           text-align: right;
+           right: 0;
+        }
+    }
+    &.left{
+        > b.first{
+            color: $green;
+        }
+        > .radio-input{
+            > i{
+                left: torem(-2px);
+            }
+        }
+    }
+    &.right{
+        > b.second{
+            color: $green;
+        }
+        > .radio-input{
+            > i{
+                right: torem(-2px);
+            }
+        }
+    }
+}
+
+/* colors */
+.lightmore{
+    color: $lightmore;
+}
+.text-black{
+    color: $black!important;
+}
+.text-orange{
+    color: $orange!important;
+}
+.text-lightmost{
+    color: $lightmost!important;
+}
+.text-green{
+    color: $green!important;
+}
+
+/* lay out */
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
+.text-center{
+    text-align: center;
+}
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+
+/* other */
+.number{
+    font-size: $fontsize-ms;
+}
+// show & hide
+.show{
+    display: block!important;
+}
+.hide{
+    display: none!important;
+}
+.word-nowrap{
+    white-space: nowrap;
+    font-size: $fontsize-s;
+    > .btn{
+        margin-left: torem(10px);
+        font-size: $fontsize-s;
+    }
+}
+.bg-white{
+    background-color: $white!important;
+}
+.bg-gray{
+    background-color: $gray!important;
+}
+img.round{
+    border-radius: 50%;
+    &.border{
+        border: 1px solid $white;   
+    }
+    &.orange{
+        border-color: $orange;
+    }
+}
+
+
+.alert, .confirm{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: torem(330px);
+    /* left: torem(25px);
+    right: torem(25px); */
+    z-index: 99;
+    margin-top: torem(-75px);
+    margin-left: torem(-165px);
+    background: #fff;
+    border-radius: 10px;
+}
+.alert-title{
+    padding-top: torem(20px);
+    text-align: center;
+    font-size: torem(20px);
+    color: $orange;
+}
+.alert-main, .confirm-main{
+    padding: torem(20px);
+    font-size: torem(18px);
+    font-weight: bold;
+    color: $lightmore;
+}
+.test-base64{
+    > div{
+        padding-bottom: 194px;    
+        &:nth-child(1){
+            background: url(../images/top_bg.png) center center no-repeat;
+        }
+        &:nth-child(2){
+            background: url(../images/bg_code_bottom.png) center center no-repeat;
+        }
+        &:nth-child(3){
+            background: url(../images/sprite/user_orange.png) center center no-repeat;
+        }
+        &:nth-child(4){
+            background: url(../images/sprite/menu_03.png) center center no-repeat;
+        }
+    }
+}
+.alert-footer, .confirm-footer{
+    padding: torem(10px) torem(20px) torem(20px) torem(20px);
+    text-align: center;
+}
+@each $maxWidth in 320px,375px,414px,480px,640px,768px {
+    @media ( min-width: $maxWidth ){
+        html{
+            font-size: 20*$maxWidth/375;
+        }
+    }
+}
