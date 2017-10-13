@@ -10,6 +10,7 @@ var projectName = 'demo',
     sass = require( 'gulp-sass' ),
     cssmin = require( 'gulp-cssmin' ),
     imagemin = require('gulp-imagemin'),
+    spritesmith = require("gulp-spritesmith"),
     rename = require('gulp-rename'),
     browserSync = require( 'browser-sync' ).create(),
     proxy = require('http-proxy-middleware'),
@@ -81,6 +82,23 @@ gulp.task( 'cssmin', ['sass'], function() {
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('/src/css'))
         //.pipe(reload({stream: true}));
+});
+
+// css sprite
+gulp.task('sprite', function () {
+    return  gulp.src( 'src/components/common/images/sprite/*.png')
+        .pipe(spritesmith({
+            imgName: 'sprite.png',
+            styleName: 'sprite.scss',
+            imgPath: '../images/sprite.png',
+            // cssFormat: 'css',
+            // Prefix all sprite names with `sprite-` (e.g. `home` -> `sprite-home`)
+            cssVarMap: function (sprite) {
+              sprite.name = 'sprite' + sprite.name;
+            }
+        }))
+        .pipe(gulpif('*.png', gulp.dest(projectName + 'assets/images/')))
+        .pipe(gulpif('*.scss', gulp.dest(projectName + 'assets/sass/')));
 });
 
 // 清除生成的html和js、css、图片等静态资源
