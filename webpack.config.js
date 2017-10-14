@@ -1,4 +1,4 @@
-// webpack config: webpack配置文件
+s// webpack config: webpack配置文件
 var projectName = 'demo',
     webpack = require( 'webpack' ),
     glob = require('glob'),
@@ -186,13 +186,13 @@ for (var pathname in pages) {
                 minifyCSS: true  //压缩页面CSS
             }
         };
-    }else if( options.env == 'static' ){
+    }/*else if( options.env == 'static' ){
         var conf = {
             filename: './static/' + pathname + '.html', // html 文件输出路径
             template: pages[pathname], // 模板路径
             inject: true,              // js 插入位置
         };
-    }else{
+    }*/else{
         var conf = {
             filename: './' + pathname + '.html', // html 文件输出路径
             template: pages[pathname], // 模板路径

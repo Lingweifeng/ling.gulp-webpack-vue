@@ -118,7 +118,7 @@ var knownOptions = {
 
 var options = minimist(process.argv.slice(2), knownOptions);
 
-// 默认开发模式：gulp；static环境：gulp --env static; 生产模式要传入参数：gulp --env production
+// 默认开发模式：gulp；生产模式要传入参数：gulp --env production
 gulp.task('webpack', [ 'clean' ], function() {
     webpack( require('./webpack.config.js'), function(err, stats) {
         if(err) throw new gutil.PluginError("webpack", err);
@@ -152,17 +152,17 @@ gulp.task('webpack', [ 'clean' ], function() {
         //gulp.watch( "src/components/common/images/sprite/*.png", ['sprite'] ); // 监听sprite,自动生成雪碧图
         gulp.watch( ["./dev/**/*.html", "./dev/public/css/**/*.css", "./dev/public/js/**/*.js"], reload ); // 监听html/css/js
     // 纯静态环境：目录结构简化
-    }else if( options.env == 'static' ){
-        browserSync.init({
-            server: {
-                baseDir: "./",
-            },
-            startPath: "static/index/index.html"
-        });
-        gulp.watch( "/src/**/*.scss", ['cssmin'] ); // 监听SASS
-        gulp.watch( ["static/application/views/**/*.html", "static/public/css/**/*.css", "static/public/js/**/*.js"], reload ); // 监听html/css/js
-    // 线上环境：目录结构复杂
-    }else{
+    // }else if( options.env == 'static' ){
+    //     browserSync.init({
+    //         server: {
+    //             baseDir: "./",
+    //         },
+    //         startPath: "static/index/index.html"
+    //     });
+    //     gulp.watch( "/src/**/*.scss", ['cssmin'] ); // 监听SASS
+    //     gulp.watch( ["static/application/views/**/*.html", "static/public/css/**/*.css", "static/public/js/**/*.js"], reload ); // 监听html/css/js
+    // // 线上环境：目录结构复杂
+    // }else{
         browserSync.init({
             server: {
                 baseDir: "./dist/",
