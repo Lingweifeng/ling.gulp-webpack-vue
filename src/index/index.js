@@ -1,22 +1,25 @@
 import Common from '../components/common/'
 import App from './app.vue'
+import Hello from './HelloWorld.vue'
 //require('./style.scss')
 
 /* 实例化一个vue */
 console.log( Common );
 
 /*const routes = [
-  { path: '/', redirect: '/index/' },
-  { path: '/index/hello', name: 'hello', component: hello }
+	//{ path: '/', redirect: '/index/' },
+	{ path: '/hello', name: 'hello', component: Hello }
+]*/
+const routes = [
+	{ path: '/index', component: App },
+	{ path: '/index/hello', name: 'hello', component: Hello }
 ]
 
-const router = new common.Router({
+const router = new Common.Router({
 	mode: 'history',
-	routes: routes
-})*/
+	routes
+})
 
-new Common.Vue({
-  el: '#app',
-  //router,
-  render: h => h(App)
-})//.$mount('#example')
+const app = new Common.Vue({
+  router
+}).$mount('#app')

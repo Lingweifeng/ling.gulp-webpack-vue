@@ -89,7 +89,7 @@ gulp.task( 'cssmin', ['sass'], function() {
 
 // css sprite
 gulp.task('sprite', function () {
-    return  gulp.src( 'src/components/common/images/sprite/*.png')
+    return  gulp.src( './src/components/common/images/sprite/*.png')
         .pipe(spritesmith({
             imgName: 'sprite.png',
             styleName: 'sprite.scss',
@@ -146,10 +146,10 @@ gulp.task('webpack', [ 'clean' ], function() {
                   apiProxy
                 ]
             },
-            startPath: "index/index.html"
+            startPath: "index"
         });
-        gulp.watch( "./src/**/*.scss", ['cssmin'] ); // 监听SASS
-        //gulp.watch( "src/components/common/images/sprite/*.png", ['sprite'] ); // 监听sprite,自动生成雪碧图
+        //gulp.watch( "./src/**/*.scss", ['cssmin'] ); // 监听SASS
+        gulp.watch( "./src/components/common/images/sprite/*.png", ['sprite'] ); // 监听sprite,自动生成雪碧图
         gulp.watch( ["./dev/**/*.html", "./dev/public/css/**/*.css", "./dev/public/js/**/*.js"], reload ); // 监听html/css/js
     // 纯静态环境：目录结构简化
     }
@@ -172,7 +172,7 @@ gulp.task('webpack', [ 'clean' ], function() {
                   apiProxy
                 ]
             },
-            startPath: "index/index.html"
+            startPath: "index"
         });
     };
 });

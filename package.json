@@ -56,6 +56,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "element-ui": "^1.4.6",
-    "vue": "^2.2.4"
+    "vue": "^2.2.4",
+    "vue-router": "^3.0.1"
   }
 }

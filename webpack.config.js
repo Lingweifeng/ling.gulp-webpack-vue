@@ -25,7 +25,7 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-var entries = getEntry( './src/**/*.js'); // 获得入口 js 文件
+var entries = getEntry( './src/**/index.js'); // 获得入口 js 文件
 var chunks = Object.keys(entries);
 
 // 获取命令行传递参数env，开发：gulp --env dev(默认)；生产：gulp --env production
