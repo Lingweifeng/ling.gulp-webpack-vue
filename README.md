@@ -14,7 +14,7 @@ gulp --env dev
 ```
 监测.vue文件，自动执行webpack打包文件到dev；同步监测html/js/css文件，自动刷新浏览器<br>
 
-三.进入打包模式，页面视图打包到dist/application文件夹；静态资源打包到dist/public文件夹：
+三.进入打包模式，页面视图打包到dist文件夹；静态资源打包到dist/public文件夹：
 ```
 gulp --env production
 ```
