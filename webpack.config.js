@@ -1,4 +1,4 @@
-s// webpack config: webpack配置文件
+// webpack config: webpack配置文件
 var projectName = 'demo',
     webpack = require( 'webpack' ),
     glob = require('glob'),
