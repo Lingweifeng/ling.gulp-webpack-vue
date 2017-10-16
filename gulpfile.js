@@ -141,7 +141,8 @@ gulp.task('webpack', [ 'clean' ], function() {
     if( options.env != 'production' ){
         browserSync.init({
             server: {
-                baseDir: "./dev/",
+                baseDir: "dev",
+                index: "index.html",
                 middleware: [
                   apiProxy
                 ]
@@ -168,6 +169,7 @@ gulp.task('webpack', [ 'clean' ], function() {
         browserSync.init({
             server: {
                 baseDir: "./dist/",
+                index: "index.html",
                 middleware: [
                   apiProxy
                 ]
