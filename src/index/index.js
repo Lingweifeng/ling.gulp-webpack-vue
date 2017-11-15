@@ -1,7 +1,6 @@
 import Common from '../components/common/'
 import App from './app.vue'
 import Hello from './HelloWorld.vue'
-//require('./style.scss')
 
 /* 实例化一个vue */
 console.log( Common );
