@@ -10,12 +10,12 @@ console.log( Common );
 	{ path: '/hello', name: 'hello', component: Hello }
 ]*/
 const routes = [
-	{ path: '/index', component: App },
+	{ path: '/', component: App },
 	{ path: '/index/hello', name: 'hello', component: Hello }
 ]
 
 const router = new Common.Router({
-	mode: 'history',
+	//mode: 'history',
 	routes
 })
 
